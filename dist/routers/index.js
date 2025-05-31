@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+// src/routes/index.route.ts
+const express_1 = require("express");
+const authController_1 = require("../controllers/authController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const articleControllers_1 = require("../controllers/articleControllers");
+const router = (0, express_1.Router)();
+router.post('/login', authController_1.authController.login.bind(authController_1.authController));
+router.delete('/logout', authMiddleware_1.authenticateUser, authController_1.authController.logout.bind(authController_1.authController));
+router.post('/signup', authController_1.authController.signup.bind(authController_1.authController));
+router.get('/', authMiddleware_1.authenticateUser, authController_1.authController.getUser.bind(authController_1.authController));
+router.post('/article/', articleControllers_1.create);
+router.put('/article/:id', authMiddleware_1.authenticateUser, articleControllers_1.edit);
+router.delete('/article/:id', authMiddleware_1.authenticateUser, articleControllers_1.softDelete);
+router.patch('/article/like/:id', authMiddleware_1.authenticateUser, articleControllers_1.like);
+router.patch('/article/remove-like/:id', authMiddleware_1.authenticateUser, articleControllers_1.removeLike);
+router.patch('/article/dislike/:id', authMiddleware_1.authenticateUser, articleControllers_1.dislike);
+router.patch('/article/remove-dislike/:id', authMiddleware_1.authenticateUser, articleControllers_1.removeDislike);
+router.patch('/article/block/:id', authMiddleware_1.authenticateUser, articleControllers_1.block);
+router.patch('/article/unblock/:id', authMiddleware_1.authenticateUser, articleControllers_1.unblock);
+router.get('/article', authMiddleware_1.authenticateUser, articleControllers_1.getUserArticles);
+router.get('/article/Preference', authMiddleware_1.authenticateUser, articleControllers_1.getPreferenceArticles);
+exports.default = router;
