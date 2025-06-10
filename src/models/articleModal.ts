@@ -1,23 +1,20 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import { IArticle } from '../type/artiicle';
+import mongoose, { Schema, Document, Types } from 'mongoose';
+import { Article } from '../type/artiicle';
 
 const ArticleSchema: Schema = new Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
-  author: {
-    name: { type: String, required: true },
-    avatar: { type: String, required: true },
-  },
+  authorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   publishedAt: { type: String, required: true },
   category: { type: String, required: true },
   image: { type: String, required: true },
-  likes: { type: Number, default: 0 },
-  readTime: { type: Number, required: true },
+  likes: [{ type: Schema.Types.ObjectId, ref: 'User',default: []  }],
+  dislikes: [{ type: Schema.Types.ObjectId, ref: 'User',default: []  }],
+  blockedBy: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
+  readTime: { type: Number, required: true, default: 1 },
   views: { type: Number, default: 0 },
-  isLiked: { type: Boolean, default: false },
-  isDisliked: { type: Boolean, default: false },
   tags: [{ type: String }],
   isDeleted: { type: Boolean, default: false },
 }, { timestamps: true });
 
-export const ArticleModel = mongoose.model<IArticle>('Article', ArticleSchema);
+export const ArticleModel = mongoose.model<Article>('Article', ArticleSchema);

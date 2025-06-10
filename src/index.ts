@@ -11,7 +11,7 @@ const app:Application=express();
 const PORT = envVaribales.PORT;
 console.log(envVaribales.FRONTEND_URL)
 app.use(cors({
-  origin: envVaribales.FRONTEND_URL, 
+  origin: [envVaribales.FRONTEND_URL,"https://article-feed-client.vercel.app"], 
   credentials: true, 
 }));
 app.use(cookieParser());

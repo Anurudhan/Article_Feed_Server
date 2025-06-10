@@ -1,22 +1,33 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface Author {
+export interface Author {
   name: string;
   avatar: string;
 }
-
-export interface IArticle extends Document {
+export interface createArticleEntity{
   title: string;
   content: string;
-  author: Author;
+  authorId: string;
   publishedAt: string;
   category: string;
   image: string;
-  likes: number;
+  tags: string[];
+  readTime: number;
+}
+export interface Article {
+  _id: string;
+  title: string;
+  content: string;
+  authorId: string;
+  author?: Author;
+  publishedAt: string;
+  category: string;
+  image: string;
+  likes: string[];  
+  dislikes: string[];
+  blockedBy: string[];  
   readTime: number;
   views: number;
-  isLiked: boolean;
-  isDisliked: boolean;
-  tags?: string[];
+  tags: string[];
   isDeleted?: boolean;
 }

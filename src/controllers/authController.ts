@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import UserModel from '../models/userModel';
 import { createAccessToken, createRefreshToken } from '../utility/token';
 import { CustomRequest } from '../utility/CustomRequest';
+import mongoose from 'mongoose';
 
 class AuthController {
   // Signup method
@@ -53,12 +54,14 @@ class AuthController {
       
       const user = await UserModel.findOne({$or:[{email:emailOrPhone},{phone:emailOrPhone}] });
       if (!user) {
+        console.log("no user using this mail or phone")
         res.status(401).json({ message: 'Invalid credentials',sucess:false});
         return;
       }
       
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
+        console.log("Mismatching the user password ")
         res.status(401).json({ message: 'Invalid credentials' ,sucess:false});
         return;
       }
@@ -86,6 +89,14 @@ class AuthController {
       res.status(500).json({ message: 'Internal server error',sucess:false});
     }
   }
+  async updateUser(req:CustomRequest,res:Response):Promise<void>{
+    try {
+      const  userId =  new mongoose.Types.ObjectId(req?.user?.userId);
+      
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error',sucess:false});
+    }
+  }
 
   // Get user info
   async getUser(req: CustomRequest, res: Response, next: NextFunction): Promise<void> {
@@ -104,7 +115,7 @@ class AuthController {
       return;
     }
 
-    res.status(200).json({ user });
+    res.status(200).json({ data:user ,success:true,message:"get user data successfully"});
   } catch (error) {
     next(error);
   }
