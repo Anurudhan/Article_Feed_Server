@@ -7,11 +7,12 @@ import router from "./routers";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
 
+console.log(envVaribales.FRONTEND_URL,"this is my frontend  url====>")
 const app:Application=express();
 const PORT = envVaribales.PORT;
 console.log(envVaribales.FRONTEND_URL)
 app.use(cors({
-  origin: [envVaribales.FRONTEND_URL,"https://article-feed-client.vercel.app"], 
+  origin: [envVaribales.FRONTEND_URL], 
   credentials: true, 
 }));
 app.use(cookieParser());
