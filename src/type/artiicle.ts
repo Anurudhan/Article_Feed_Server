@@ -13,6 +13,7 @@ export interface createArticleEntity{
   image: string;
   tags: string[];
   readTime: number;
+  isPublished?:boolean;
 }
 export interface Article {
   _id: string;
@@ -29,5 +30,6 @@ export interface Article {
   readTime: number;
   views: number;
   tags: string[];
+  isPublished?:boolean;
   isDeleted?: boolean;
 }

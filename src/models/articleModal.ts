@@ -15,6 +15,7 @@ const ArticleSchema: Schema = new Schema({
   views: { type: Number, default: 0 },
   tags: [{ type: String }],
   isDeleted: { type: Boolean, default: false },
+  isPublished:{ type:Boolean, default:false }
 }, { timestamps: true });
 
 export const ArticleModel = mongoose.model<Article>('Article', ArticleSchema);
